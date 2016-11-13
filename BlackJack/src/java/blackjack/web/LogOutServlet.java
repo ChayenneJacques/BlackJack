@@ -33,6 +33,7 @@ public class LogOutServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        //als op de Uitloggen-knop gedrukt wordt, wordt de huidige sessie afgebroken
         HttpSession session = request.getSession(false);
        
         session.invalidate();

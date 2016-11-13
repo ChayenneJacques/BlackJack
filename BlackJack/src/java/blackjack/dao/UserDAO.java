@@ -89,7 +89,7 @@ public class UserDAO {
  * @return 
  */
     public static ResultSet getUserIdByNickname(String nickname) {
-        String query = "SELECT Id from user WHERE nickname = '" + nickname+"'";
+        String query = "SELECT Id from user WHERE nickname = '" + nickname + "'";
         Connection con = DatabaseSingleton.getDatabaseSingleton().getConnection(true);
 
         Statement stmt = null;

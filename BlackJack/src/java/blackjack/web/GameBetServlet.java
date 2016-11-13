@@ -36,39 +36,36 @@ public class GameBetServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Game game=(Game)request.getServletContext().getAttribute("game");
+        
+        Game game = (Game) request.getServletContext().getAttribute("game");
         game.getDeck().clear();
         game.getDeck().fillDeck();
         game.getDeck().shuffle();
         game.getDealer().getHand().clear();
-         List<String> bets = new ArrayList(request.getParameterMap().keySet());
-    ArrayList<User> players=game.getPlayers();
-        Iterator<User> it=players.iterator();
-        User user=null;
-        int i=0;
-        while(it.hasNext())
-        {
-            user=it.next();
+        
+        //alle inzetten bijhouden
+        List<String> bets = new ArrayList(request.getParameterMap().keySet());
+        ArrayList<User> players = game.getPlayers();
+        Iterator<User> it = players.iterator();
+        User user = null;
+        int i = 0;
+        //voor elke speler wordt de inzet afgetrokken van zijn saldo
+        while (it.hasNext()) {
+            user = it.next();
             user.getHand().clear();
             user.setBet(Integer.parseInt(request.getParameter(bets.get(i))));
-            user.setBalance(user.getBalance()-user.getBet());
+            user.setBalance(user.getBalance() - user.getBet());
             UserService.editUser(user);
             i++;
-            
+
         }
         game.cardDistribution();
-      
-        request.getServletContext().setAttribute("game",game);
-        
-        
-        RequestDispatcher view=request.getRequestDispatcher("GameDistribute.jsp");
-        view.forward(request,response);
-        
-        
-        
-        
-       
-       
+
+        request.getServletContext().setAttribute("game", game);
+
+        RequestDispatcher view = request.getRequestDispatcher("GameDistribute.jsp");
+        view.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

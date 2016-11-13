@@ -36,30 +36,24 @@ public class GamePlayerListServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         List<String> parameterNames = new ArrayList(request.getParameterMap().keySet());
-    ArrayList<User>playerList=new ArrayList();
-    ArrayList<String>nickNames=new ArrayList();
-    Iterator<String> it=parameterNames.iterator();
-    while(it.hasNext())
-    {
-        String next=it.next();
-      playerList.add(UserService.getUserByNickname((String)request.getParameter(next))); 
-       nickNames.add((String)request.getParameter(next));
-    }
         
-        
-        
-        
-        
-        
-        Game game=Game.getGame();
+        List<String> parameterNames = new ArrayList(request.getParameterMap().keySet());
+        ArrayList<User> playerList = new ArrayList();
+        ArrayList<String> nickNames = new ArrayList();
+        Iterator<String> it = parameterNames.iterator();
+        while (it.hasNext()) {
+            String next = it.next();
+            playerList.add(UserService.getUserByNickname((String) request.getParameter(next)));
+            nickNames.add((String) request.getParameter(next));
+        }
+
+        Game game = Game.getGame();
         game.setPlayerList(playerList);
-    
-   
-    request.getServletContext().setAttribute("game",game);
-    request.getServletContext().setAttribute("nickNames",nickNames);
-    RequestDispatcher view=request.getRequestDispatcher("GameBet.jsp");
-        view.forward(request,response);
+
+        request.getServletContext().setAttribute("game", game);
+        request.getServletContext().setAttribute("nickNames", nickNames);
+        RequestDispatcher view = request.getRequestDispatcher("GameBet.jsp");
+        view.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

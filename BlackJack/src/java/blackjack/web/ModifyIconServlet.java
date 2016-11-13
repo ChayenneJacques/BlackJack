@@ -41,15 +41,15 @@ public class ModifyIconServlet extends HttpServlet {
 
         String iconname = request.getParameter("newIconName");
         String nickname = request.getParameter("nickname");
-        System.out.println("iconname "+iconname);
-        System.out.println("nickname "+nickname);
+
         User user = UserService.getUserByNickname(nickname);
         
         Icon icon=IconService.getIconByName(iconname);
         user.setIcon(icon);
         UserService.editUser(user);
         
-        
+        //als de hoofdgebruiker niet ingelogd is, wordt deze niet weergegeven in de lijst van de gebruikers
+        //op die manier kunnen de gewone gebruikers niet spelen met het account van de hoofdgebruiker
         HttpSession session=request.getSession();
         String headusername=(String)session.getAttribute("headusername");
         List<User> users;

@@ -36,7 +36,7 @@ public class GamestateDAO {
  * @return 
  */
 public static ResultSet getIdByGameState(String gamestate) {
-        String query = "SELECT Id from Gamestate WHERE name = '" + gamestate+"'";
+        String query = "SELECT Id from Gamestate WHERE name = '" + gamestate + "'";
         Connection con = DatabaseSingleton.getDatabaseSingleton().getConnection(true);
 
         Statement stmt = null;

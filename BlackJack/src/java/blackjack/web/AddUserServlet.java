@@ -42,6 +42,7 @@ public class AddUserServlet extends HttpServlet {
             String nickname = request.getParameter("nickname");
             int credits = Integer.parseInt(request.getParameter("credits"));
 
+            //controleren of er al een gebruiker in de databank zit met deze gebruikersnaam, zoja: errormessage
             for (int i = 0; i < users.size(); i++) {
                 if (users.get(i).getNickname().equals(nickname)) {
                     
@@ -50,7 +51,7 @@ public class AddUserServlet extends HttpServlet {
                     view.forward(request, response);
                 }
             }
-
+            //elke nieuwe gebruiker krijgt een standaardicoon
             Icon icon = IconService.getIconByName("default");
             User user = new User(nickname, credits, icon);
             UserService.addUser(user);

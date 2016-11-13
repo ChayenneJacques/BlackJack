@@ -42,8 +42,8 @@ public class LogInServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // als het ww en emailadres correct is, geeft het sessie-object de waarde "loggedin" en wordt er naar de opgevraagde pagina gegaan
-        // indien het ww en emailadres niet correct is, wordt er terug naar het loginscherm gegaan
+        // als het wachtwoord en emailadres correct is, geeft het sessie-object de waarde "loggedin" en wordt er naar de opgevraagde pagina gegaan
+        // indien het wachtwoord en emailadres niet correct is, wordt er terug naar het loginscherm gegaan
         if (HeaduserService.isAuthenticatedHeaduser(email, password)) {
             session.setAttribute("loggedin", "loggedin");
             newPage=page1;
@@ -51,6 +51,7 @@ public class LogInServlet extends HttpServlet {
             request.setAttribute("errormessage","Verkeerd emailadres en/of wachtwoord. Probeer opnieuw!");
             newPage="LoginScreen.jsp?page="+page1;
         }
+        
         RequestDispatcher view = request.getRequestDispatcher(newPage);
             view.forward(request, response);
     }

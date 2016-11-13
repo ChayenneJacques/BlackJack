@@ -42,9 +42,8 @@ public class Conversion {
         }
         return list;
     }
-    /*
-    Converteert een resultset naar een Headuser-object.
-    */
+ 
+    //Converteert een resultset naar een Headuser-object.
     public static Headuser convertResultSetToHeaduser(ResultSet rs) {
         Headuser headuser = null;
         Icon icon = null;
@@ -73,9 +72,8 @@ public class Conversion {
         return headuser;
 
     }
- /*
-    Converteert een resultset naar een lijst van iconen.
-    */
+ 
+    //Converteert een resultset naar een lijst van iconen.
     public static List<Icon> convertResultSetToListIcons(ResultSet rs) {
         List<Icon> list = new ArrayList();
         String iconname, iconpath;
@@ -92,9 +90,8 @@ public class Conversion {
         }
         return list;
     }
-    /*
-    Converteert een resultset naar een id.
-    */
+    
+    //Converteert een resultset naar een id.
     public static int convertResultSetToId(ResultSet rs) {
         int res = -1;
         try {
@@ -106,9 +103,8 @@ public class Conversion {
         }
         return res;
     }
-/*
-    converteert een resultset naar een enkele gebruiker.
-    */
+
+    //converteert een resultset naar een enkele gebruiker.
     public static User convertResultSetToUser(ResultSet rs) {
         String nickname, iconname, iconpath;
         int balance;
@@ -116,9 +112,7 @@ public class Conversion {
         Icon icon = null;
         try {
             while (rs.next()) {
-                /*
-                Deze lus zal maar 1 keer overlopen worden.
-                */
+                //Deze lus zal maar 1 keer overlopen worden.
                 nickname = rs.getString("Nickname");
                 balance = rs.getInt("Balance");
                 iconname = rs.getString("icon.Name");
@@ -130,9 +124,8 @@ public class Conversion {
         }
         return user;
     }
-/*
-    Converteert een resultset naar een lijst van History-objecten.
-    */
+
+    //Converteert een resultset naar een lijst van History-objecten.
     public static List<History> convertResultsetToHistoryList(ResultSet rs) {
         List<History> list = new ArrayList();
         String nickname, iconname, iconpath, date, gamestate;
@@ -140,9 +133,8 @@ public class Conversion {
 
         try {
             while (rs.next()) {
-                /*
-                Voor elke result in de resultset worden de benodigde gegevens opgevraagd.  
-                */
+                
+                //Voor elke result in de resultset worden de benodigde gegevens opgevraagd.  
                 gameid = rs.getInt("game.Id");
                 date = rs.getString("Date");
                 gamestate = rs.getString("gamestate.Name");
@@ -167,9 +159,8 @@ public class Conversion {
         }
         return list;
     }
-/*
-    Converteert een resultset naar 1 enkele Icon.
-    */
+
+    //Converteert een resultset naar 1 enkele Icon.
     public static Icon convertResultSetToIcon(ResultSet rs) {
         String iconname, iconpath;
         Icon icon=null;
@@ -184,9 +175,8 @@ public class Conversion {
 
         } return icon;
     }
-    /*
-    Converteert een resultset naar een integer.
-    */
+
+    //Converteert een resultset naar een integer.
     public static int convertResultSetToInt(ResultSet rs)
     {
         int res = 0;

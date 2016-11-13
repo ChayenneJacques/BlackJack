@@ -78,7 +78,7 @@
 
             }
         </script>
-        <title>JSP Page</title>
+        <title>Inzet ingeven</title>
     </head>
     <body>
 

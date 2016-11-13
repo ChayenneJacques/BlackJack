@@ -36,6 +36,7 @@ public class ModifyUserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         String iconname = request.getParameter("iconname");
         String nickname = request.getParameter("nickname");
         int balance = Integer.parseInt(request.getParameter("balance"));

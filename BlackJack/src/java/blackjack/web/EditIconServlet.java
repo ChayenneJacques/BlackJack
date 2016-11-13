@@ -34,6 +34,8 @@ public class EditIconServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        //haalt alle icons op en set deze als attribute
         List<Icon> iconList = IconService.getIcons();
         request.getServletContext().setAttribute("iconList", iconList);
 

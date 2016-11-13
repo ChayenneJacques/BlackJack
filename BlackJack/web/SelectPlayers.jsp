@@ -15,9 +15,6 @@
 <%
     //int max=4;
     List<User> users = (List<User>)request.getAttribute("users");
-    
-    
-
 
 %>
 
@@ -147,12 +144,9 @@
                             i++;
                         }
                     %>
-                </div>
-               
+                </div>      
             </div>
             <br/>
-
-
         </form>
                 <button class="regularButton" id="previous" onclick="location.href='StartScreen.jsp'">Terug</button>
                 <button class="regularButton" id="next" onclick="submitForm()" name="ok">Volgende</button>

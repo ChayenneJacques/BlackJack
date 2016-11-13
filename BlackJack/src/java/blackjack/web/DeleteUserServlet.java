@@ -33,6 +33,9 @@ public class DeleteUserServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
+            //de nickname van de aangeklikte gebruiker wordt meegegeven in de methode removeUser
+            //in deze methode wordt in de databank gezocht naar een user met deze nickname en wordt daarna verwijderd
             String nickname = request.getParameter("nickname");
             UserService.removeUser(nickname);
 
