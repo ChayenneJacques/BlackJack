@@ -39,45 +39,70 @@ public class GameServlet extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher("Game.jsp");
         Game game = (Game) request.getServletContext().getAttribute("game");
         String currentPlayerIndex = (String) request.getServletContext().getAttribute("currentPlayerIndex");
-        System.out.println(currentPlayerIndex);
         int index = Integer.parseInt(currentPlayerIndex);
+
+        //Als currentPlayerIndex null is, is het aan de eerste speler. (en wordt currentPlayerIndex op 0 gezet)
         if (currentPlayerIndex == null) {
-            System.out.println("no currentplayer");
             request.getServletContext().setAttribute("currentPlayerIndex", "0");
-             while(game.getPlayers().size()>index+1 && game.getPlayers().get(index).getHand().getState()==Handstate.Blackjack)
-                    {
-                    index += 1;
-                    }
-             request.getServletContext().setAttribute("currentPlayerIndex", index + "");
-        }else if (Integer.parseInt(currentPlayerIndex) < game.getPlayers().size()) {
-            
+
+            //Elke speler die blackjack heeft, wordt overgeslaan.
+            //Ook moet je controleren of het aantal spelers groter is dan de index die verhoogd wordt met 1.
+            while (game.getPlayers().size() > index + 1 && game.getPlayers().get(index).getHand().getState() == Handstate.Blackjack) {
+                index += 1;
+            }
+            //contextattribuut currentPlayerIndex wordt aangepast
+            request.getServletContext().setAttribute("currentPlayerIndex", index + "");
+
+            //Als currentPlayerIndex niet null is en kleiner dan het aantal spalers, 
+            //werd er sowieso een hit of stand gedaan in de jsp-pagina.
+        } else if (Integer.parseInt(currentPlayerIndex) < game.getPlayers().size()) {
+
+            //de actie (hit of stand) en de huidige speler worden opgevraagd.
             String action = (String) request.getParameter("action");
             User currentPlayer = game.getPlayers().get(index);
+
+            //actie is hit:
             if (action.equals("hit")) {
+                //kaart geven
                 game.playerHit(currentPlayer);
+                //hand evalueren
                 currentPlayer.getHand().evaluate();
-                if (currentPlayer.getHand().getState() == Handstate.Busted || currentPlayer.getHand().getState()==Handstate.Stand) {
-                    index+=1;
-                    while(game.getPlayers().size()>index+1 && game.getPlayers().get(index).getHand().getState()==Handstate.Blackjack)
-                    {
+                //indien de handstatus busted of stand is, is het aan de volgende speler
+                //index wordt dus verhoogd.
+                if (currentPlayer.getHand().getState() == Handstate.Busted || currentPlayer.getHand().getState() == Handstate.Stand) {
                     index += 1;
+
+                    //Elke volgende speler die blackjack heeft, wordt overgeslaan.
+                    //Ook moet je controleren of het aantal spelers groter is dan de index die verhoogd wordt met 1.
+                    while (game.getPlayers().size() > index + 1 && game.getPlayers().get(index).getHand().getState() == Handstate.Blackjack) {
+                        index += 1;
                     }
                 }
+
+                //actie is stand:
             } else {
+                //index wordt verhoogd en de handstate wordt op stand geplaatst.
                 index += 1;
                 currentPlayer.getHand().setState(Handstate.Stand);
             }
-            
+
+            //contextattribuut currentPlayerIndex wordt gewijzigd.
             request.getServletContext().setAttribute("currentPlayerIndex", index + "");
-            if(index>=game.getPlayers().size())
-            {
+
+            //indien alle spelers gespeeld hebben is het aan de dealer.
+            if (index >= game.getPlayers().size()) {
+                //contextattribuut currentPlayerIndex wordt op null geplaatst
                 request.getServletContext().setAttribute("currentPlayerIndex", null);
+                //kaart die omgekeerd op tafel ligt, wordt omgedraaid.
                 game.getDealer().getHand().getCards().get(1).setVisibility(true);
-                        view = request.getRequestDispatcher("gameDealerServlet");
+                //view wordt aangepast naar gameDealerServlet.
+                //daar speelt de dealer.
+                //ook de gamestates worden daar gewijzigd, en de winstverdeling wordt uitgevoerd.
+                view = request.getRequestDispatcher("gameDealerServlet");
             }
-        } 
-            
-        
+        }
+
+        //het game-object is gewijzigd en moet op contextniveau overschreven worden.
         request.getServletContext().setAttribute("game", game);
 
         view.forward(request, response);
